@@ -21,8 +21,23 @@
     
     [[self.webView mainFrame] loadRequest:request];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterFullScreenMode) name:@"NSWindowWillEnterFullScreenNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(exitFullScreenMode) name:@"NSWindowWillExitFullScreenNotification" object:nil];
+    
     // Do any additional setup after loading the view.
 }
+
+-(void) enterFullScreenMode {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"player.pause();"];
+}
+
+-(void) exitFullScreenMode {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"player.play();"];
+}
+
+
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
